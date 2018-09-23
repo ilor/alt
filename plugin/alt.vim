@@ -97,8 +97,11 @@ function! AltFileAll()
 python3 << endpython
 import vim
 name = vim.current.buffer.name
-alt = get_alternate_file(name, False)
-vim.command('edit ' + alt)
+try:
+  alt = get_alternate_file(name, False)
+  vim.command('edit ' + alt)
+except Exception as e:
+  vim.command('s:ErrMsg ' + 'no_alt'))
 endpython
 endfunction
 
