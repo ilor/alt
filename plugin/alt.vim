@@ -40,6 +40,7 @@ def get_alternate_file(filename, this_os=False, file_exists=os.path.exists):
 
   root, ext = os.path.splitext(filename)
   underscore_exts = [
+    'android',
     'aura',
     'aurawin',
     'aurax11',
@@ -56,7 +57,7 @@ def get_alternate_file(filename, this_os=False, file_exists=os.path.exists):
     if sys.platform.startswith('win32'):
       underscore_exts = [ 'aura', 'aurawin', 'win', 'win32' ]
     elif sys.platform.startswith('linux'):
-      underscore_exts = [ 'aura', 'auralinux', 'fuchsia', 'posix', 'linux' ]
+      underscore_exts = [ 'android', 'aura', 'auralinux', 'fuchsia', 'posix', 'linux' ]
     elif sys.platform.startswith('darwin'):
       underscore_exts = [ 'mac', 'posix' ]
     else:
