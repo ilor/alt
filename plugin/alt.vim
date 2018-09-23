@@ -5,12 +5,12 @@
 " Scott Graham <scott.vimalt@h4ck3r.net>
 
 
-if !has('python')
+if !has('python3')
   s:ErrMsg( "Error: Required vim compiled with +python" )
   finish
 endif
 
-python << endpython
+python3 << endpython
 import os
 
 def get_alternate_file(filename, this_os=False, file_exists=os.path.exists):
@@ -93,7 +93,7 @@ def get_alternate_file(filename, this_os=False, file_exists=os.path.exists):
 endpython
 
 function! AltFileAll()
-python << endpython
+python3 << endpython
 import vim
 name = vim.current.buffer.name
 alt = get_alternate_file(name, False)
@@ -102,7 +102,7 @@ endpython
 endfunction
 
 function! AltFileThisOs()
-python << endpython
+python3 << endpython
 import vim
 name = vim.current.buffer.name
 alt = get_alternate_file(name, True)
