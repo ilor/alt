@@ -4,13 +4,19 @@
 "
 " Scott Graham <scott.vimalt@h4ck3r.net>
 
+function! s:ErrMsg(msg)
+    echohl ErrorMsg
+    echo a:msg
+    echohl None
+endfunction
 
-if !has('python3')
-  s:ErrMsg( "Error: Required vim compiled with +python" )
+
+if !has('python3') && !has('python')
+  call s:ErrMsg( "Error: Required vim compiled with +python3 or +python" )
   finish
 endif
 
-python3 << endpython
+pythonx << endpython
 import os
 
 def get_alternate_file(filename, this_os=False, file_exists=os.path.exists):
@@ -94,23 +100,26 @@ def get_alternate_file(filename, this_os=False, file_exists=os.path.exists):
 endpython
 
 function! AltFileAll()
-python3 << endpython
+pythonx << endpython
 import vim
 name = vim.current.buffer.name
 try:
   alt = get_alternate_file(name, False)
   vim.command('edit ' + alt)
 except Exception as e:
-  vim.command('s:ErrMsg ' + 'no_alt'))
+  vim.command('call s:ErrMsg("' + str(e) + '")')
 endpython
 endfunction
 
 function! AltFileThisOs()
-python3 << endpython
+pythonx << endpython
 import vim
 name = vim.current.buffer.name
-alt = get_alternate_file(name, True)
-vim.command('edit ' + alt)
+try:
+  alt = get_alternate_file(name, True)
+  vim.command('edit ' + alt)
+except Exception as e:
+  vim.command('call s:ErrMsg("' + str(e) + '")')
 endpython
 endfunction
 
